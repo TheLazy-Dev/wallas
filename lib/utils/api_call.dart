@@ -19,7 +19,7 @@ class HttpsCalls {
       'editors_choice=$editorsChoice&orientation=${(EnumToString().getOrientation(orientation))}'
       '&category=${(EnumToString().getCategory(category))}&&safesearch=$safeSearch&'
       'order=${(EnumToString().getOrder(order))}&&color=${(EnumToString().getColorss(color))}'
-      '&imageType=${(EnumToString().getImageType(imageType))}',
+      '&imageType=${(EnumToString().getImageType(imageType))}&per_page=25',
     ));
 
     log("${response.request?.url.toString()}");

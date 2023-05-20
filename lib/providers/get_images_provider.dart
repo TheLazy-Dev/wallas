@@ -6,9 +6,9 @@ import 'package:wallas/utils/enums_extrs.dart' as orientationx;
 
 class ApiProvider extends ChangeNotifier {
   bool isLoading = true;
-  late Wallpapers wallpapers;
+  Wallpapers? wallpapers;
 
-  void getWallpapers({
+  Future<void> getWallpapers({
     Category? category,
     Colorss? colorss,
     bool? editorsChoice,
@@ -17,6 +17,7 @@ class ApiProvider extends ChangeNotifier {
     orientationx.Orientation? orientation,
     bool? safeSearch,
   }) async {
+    isLoading = true;
     HttpsCalls httpCalls = HttpsCalls();
     wallpapers = await httpCalls.httpsGetAll(
       category: category,
