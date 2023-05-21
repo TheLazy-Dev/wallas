@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wallas/providers/get_images_provider.dart';
+import 'package:wallas/providers/like_provider.dart';
 import 'package:wallas/screens/home_main.dart';
 
 void main() {
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => ApiProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LikeProvider(),
         )
       ],
       child: MaterialApp(

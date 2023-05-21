@@ -3,6 +3,7 @@ import 'package:preload_page_view/preload_page_view.dart';
 import 'package:provider/provider.dart';
 import 'package:wallas/models/wallpapers.dart';
 import 'package:wallas/providers/get_images_provider.dart';
+import 'package:wallas/widgets/custom_card.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key});
@@ -19,11 +20,11 @@ class _HomeMainState extends State<HomeMain> {
   void initState() {
     _loadImages();
     controllers = [
+      PreloadPageController(viewportFraction: 0.6, initialPage: 2),
+      PreloadPageController(viewportFraction: 0.6, initialPage: 2),
       PreloadPageController(viewportFraction: 0.6, initialPage: 3),
-      PreloadPageController(viewportFraction: 0.6, initialPage: 3),
-      PreloadPageController(viewportFraction: 0.6, initialPage: 3),
-      PreloadPageController(viewportFraction: 0.6, initialPage: 3),
-      PreloadPageController(viewportFraction: 0.6, initialPage: 3),
+      PreloadPageController(viewportFraction: 0.6, initialPage: 2),
+      PreloadPageController(viewportFraction: 0.6, initialPage: 2),
     ];
     super.initState();
   }
@@ -32,7 +33,7 @@ class _HomeMainState extends State<HomeMain> {
     for (int i = 0; i < 5; i++) {
       if (i != index) {
         controllers[i].animateToPage(page,
-            duration: const Duration(seconds: 1), curve: Curves.ease);
+            duration: const Duration(milliseconds: 1000), curve: Curves.ease);
       }
     }
   }
@@ -48,12 +49,12 @@ class _HomeMainState extends State<HomeMain> {
     return Consumer<ApiProvider>(builder: (context, walls, _) {
       hits = walls.wallpapers?.hits ?? [];
       return walls.isLoading
-          ? const Center()
+          ? const SizedBox.shrink()
           : Scaffold(
               extendBody: true,
               body: PreloadPageView.builder(
                 controller: PreloadPageController(
-                    viewportFraction: 0.8, initialPage: 3),
+                    viewportFraction: 0.6, initialPage: 2),
                 itemCount: 5,
                 preloadPagesCount: 5,
                 itemBuilder: (context, index) => PreloadPageView.builder(
@@ -61,7 +62,7 @@ class _HomeMainState extends State<HomeMain> {
                     preloadPagesCount: 5,
                     controller: controllers[index],
                     scrollDirection: Axis.vertical,
-                    physics: const ClampingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     onPageChanged: (page) {
                       _animatePage(page, index);
                     },
@@ -70,7 +71,9 @@ class _HomeMainState extends State<HomeMain> {
                       Hit hit;
                       hit = hits[hitIndex];
 
-                      return const InkWell();
+                      return CustomCard(
+                        hit: hit,
+                      );
                     }),
               ),
             );

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wallas/models/wallpapers.dart';
@@ -19,13 +18,10 @@ class HttpsCalls {
       'editors_choice=$editorsChoice&orientation=${(EnumToString().getOrientation(orientation))}'
       '&category=${(EnumToString().getCategory(category))}&&safesearch=$safeSearch&'
       'order=${(EnumToString().getOrder(order))}&&color=${(EnumToString().getColorss(color))}'
-      '&imageType=${(EnumToString().getImageType(imageType))}&per_page=25',
+      '&imageType=${(EnumToString().getImageType(imageType))}&per_page=36',
     ));
 
-    log("${response.request?.url.toString()}");
-
     if (response.statusCode == 200) {
-      log("${Wallpapers.fromJson(jsonDecode(response.body)).total}");
       return Wallpapers.fromJson(jsonDecode(response.body));
     } else {
       return Wallpapers.fromJson({});
